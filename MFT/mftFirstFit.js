@@ -184,6 +184,7 @@ function endProcess(process_id) {
   }
   drawInputQTable();
   drawFragmentations();
+  drawLegend();
 }
 
 //Drawing the Main Memory Partitions
@@ -363,4 +364,33 @@ function drawFragmentations() {
   </table>
   `;
   $("#fragmentation").html(htmlText);
+}
+
+
+function drawLegend(){
+  var htmlText = '<canvas id="l" width="200" height="200"></canvas>'
+  $("#legend").html(htmlText);
+  helper();
+}
+function helper() {
+  var divElement = $("#legend");
+
+  var ctx = document.getElementById("l").getContext("2d");
+  ctx.beginPath();
+  ctx.rect(10, 10, 40, 40);
+  ctx.fillStyle = "#B0DAFF";
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.rect(10, 70, 40, 40);
+  ctx.fillStyle = "#FEFF86";
+  ctx.fill();    
+
+  ctx.font =  "14px Arial bold";
+  ctx.fillStyle = "#FF55BB";
+  ctx.fillText("Process Used Memory",70,20);
+
+  ctx.font =  "14px Arial bold";
+  ctx.fillStyle = "#FF55BB";
+  ctx.fillText("Process Unused Memory",70,80);
 }
