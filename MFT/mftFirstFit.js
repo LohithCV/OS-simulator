@@ -17,6 +17,16 @@ var canvasHeight = 500
 var partitionStart=[]
 var partitionEnd=[]
 
+//Ready Input Queue
+var input_queue_process_size= []
+var input_queue_process_id= []
+var input_queue_size = 0
+
+//Calculating Fragmentation
+var internalFragments=0;
+var externalFragments=0;
+var processMap = new Map();
+
 $(document).ready(function () {
   $("#noOfPartitionsBtn").click(function () {
     displayPartSize();
@@ -25,7 +35,7 @@ $(document).ready(function () {
 
 function displayPartSize() {
   noOfPartitions = Number($("#noOfPartitions").val());
-  var htmlText = '';
+  var htmlText = '<h2>Partition Sizes</h2>';
   var i;
   for (i = 1; i <= noOfPartitions; i++) {
     htmlText +=
@@ -87,6 +97,7 @@ function addProcessSize() {
     $("#add-btn").click(function () {
       var process_size = Number($("#processSize").val());
       currProcessId += 1;
+      $("#processSize").val("");
       addProcess(process_size, currProcessId, 0);
     });
   });
@@ -102,7 +113,10 @@ function addProcess(process_size, currProcessId, fromQ) {
         partitionOccupied[i] = 1;
         partition_process_id[i] = currProcessId;
         found = 1;
+        processMap.set(currProcessId,process_size)
         drawProcess(process_size, currProcessId, i);
+        internalFragments+=partition_size[i]-process_size
+        externalFragments-=partition_size[i]
       }
     }
   }
@@ -111,10 +125,65 @@ function addProcess(process_size, currProcessId, fromQ) {
     addToQueue(process_size, currProcessId);
   }
   if (found == 1 && fromQ == 1) {
-    removeFromQUeue(pro_id);
+    removeFromQueue(currProcessId);
     alert('Process ' + currProcessId + ' of size ' + process_size + ' added to memory.');
   }
   drawInputQTable();
+  drawFragmentations();
+}
+
+
+function endProcessId() {
+  var htmlText =
+    `
+  <div class="form-group">
+      <label>Id of process to be removed: </label>
+      <input type="text" class="form-control" id="endProcessId" placeholder="Enter id of process to be removed">      
+  </div>
+  <button type="submit" class="btn btn-primary mt-3" id="rem-btn">End</button>
+  `;
+  $("#processDetailsForm").html(htmlText);
+  $(document).ready(function () {
+    $("#rem-btn").click(function () {
+      var process_id = Number($("#endProcessId").val());
+      $("#endProcessId").val("");
+      endProcess(process_id);
+    });
+  });
+}
+
+function endProcess(process_id) {
+  var i;
+  var found = 0;
+  for (i = 0; i < noOfPartitions; i++) {
+    if (partition_process_id[i] == process_id && found == 0) {
+
+      //Deallocating the Process Making Occupied as 0
+      partitionOccupied[i] = 0;
+      partition_process_id[i] = -1;
+      internalFragments-=(partition_size[i]-processMap.get(process_id))
+      externalFragments+=(partition_size[i])
+      processMap.delete(process_id)
+      found = 1;
+      var ctx = document.getElementById("myCanvas").getContext("2d");
+      ctx.beginPath();
+      ctx.rect(xstart, partitionStart[i], canvasWidth, partition_size[i] * (500 / total_mem_size));
+      ctx.fillStyle = "white";
+      ctx.fill();
+
+      ctx.rect(xstart, partitionStart[i], canvasWidth, partition_size[i] * (500 / total_mem_size))
+      ctx.stroke();
+      break;
+    }
+  }
+  if (found == 1) {
+    var i;
+    for (i = 0; i < input_queue_size; i++) {
+      addProcess(input_queue_process_size[i], input_queue_process_id[i], 1);
+    }
+  }
+  drawInputQTable();
+  drawFragmentations();
 }
 
 //Drawing the Main Memory Partitions
@@ -134,6 +203,8 @@ function drawMemory() {
     total_mem_size += size;
     partitionOccupied[i] = 0;
   }
+
+  externalFragments=total_mem_size
 
   //Draw Partitions
   for (i = 0; i < noOfPartitions; i++) {
@@ -171,4 +242,125 @@ function drawProcess(process_size, currProcessId, index) {
   ctx.font =  "20px Arial bold";
   ctx.fillStyle = "#FF55BB";
   ctx.fillText("P-" + String(currProcessId), canvasWidth / 2, partitionStart[index] + process_size * (500 / total_mem_size) / 2);
+}
+
+
+
+function addToQueue(process_size, process_id) {
+  input_queue_size += 1;
+  input_queue_process_id[input_queue_size - 1] = process_id;
+  input_queue_process_size[input_queue_size - 1] = process_size;
+}
+
+function removeFromQueue(process_id) {
+  var i;
+  for (i = 0; i < input_queue_size; i++) {
+    if (input_queue_process_id[i] == process_id) {
+      for (j = i + 1; j < input_queue_size; j++) {
+        //Shifting After Removal
+        input_queue_process_id[j - 1] = input_queue_process_id[j];
+        input_queue_process_size[j - 1] = input_queue_process_size[j];
+      }
+    }
+  }
+  input_queue_size -= 1;
+}
+
+function drawInputQTable() {
+  var htmlText =
+    `
+  <table class='table table-bordered border-primary'>
+  <h2> Input Queue </h2>
+  <tr>
+      <th>Process Id</th>
+  `;
+  for (var i = 0; i < input_queue_size; i++) {
+    htmlText +=
+      `
+      <td>` + input_queue_process_id[i] + `</td>
+      `;
+  }
+
+  htmlText +=
+    `
+  <tr>
+      <th>Process Size</th>
+  `;
+  for (var i = 0; i < input_queue_size; i++) {
+    htmlText +=
+      `
+      <td>` + input_queue_process_size[i] + `</td>
+      `;
+  }
+
+  htmlText +=
+    `
+  </tr>
+  </table>
+  `;
+  $("#input-q-table").html(htmlText);
+}
+
+function drawInputQTable() {
+  var htmlText =
+    `
+  <table class='table table-bordered border-primary'>
+  <h2> Input Queue </h2>
+  <tr>
+      <th>Process Id</th>
+  `;
+  for (var i = 0; i < input_queue_size; i++) {
+    htmlText +=
+      `
+      <td>` + input_queue_process_id[i] + `</td>
+      `;
+  }
+
+  htmlText +=
+    `
+  <tr>
+      <th>Process Size</th>
+  `;
+  for (var i = 0; i < input_queue_size; i++) {
+    htmlText +=
+      `
+      <td>` + input_queue_process_size[i] + `</td>
+      `;
+  }
+
+  htmlText +=
+    `
+  </tr>
+  </table>
+  `;
+  $("#input-q-table").html(htmlText);
+}
+
+function drawFragmentations() {
+  var htmlText =
+    `
+  <table class='table table-bordered border-primary'>
+  <h2>Fragmentation</h2>
+  <tr>
+      <th>Internal Fragemntation</th>
+  `;
+  htmlText+=
+      `
+      <td>` + internalFragments + `</td>`
+  htmlText +=
+    `
+  <tr>
+      <th>External Fragmentation</th>
+  `;
+
+  htmlText+=
+    `<td>` + externalFragments + `</td>
+      `; 
+
+  htmlText +=
+    `
+  </tr>
+  </table>
+  `;
+  $("#fragmentation").html(htmlText);
 }
