@@ -130,6 +130,7 @@ function addProcess(process_size, currProcessId, fromQ) {
   }
   drawInputQTable();
   drawFragmentations();
+  drawLegend();
 }
 
 
@@ -184,7 +185,6 @@ function endProcess(process_id) {
   }
   drawInputQTable();
   drawFragmentations();
-  drawLegend();
 }
 
 //Drawing the Main Memory Partitions
@@ -368,7 +368,7 @@ function drawFragmentations() {
 
 
 function drawLegend(){
-  var htmlText = '<canvas id="l" width="200" height="200"></canvas>'
+  var htmlText = '<canvas id="l" width="250" height="200"></canvas>'
   $("#legend").html(htmlText);
   helper();
 }

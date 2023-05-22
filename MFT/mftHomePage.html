@@ -55,15 +55,43 @@
                 </div>
             </section>
             
-            <section id="firstFitTheory">
-                <h2>First Fit</h2>
-            </section>
-            <section id="bestFitTheory">
-                <h2>Best Fit</h2>
-            </section>
-            <section id="worstFitTheory">
-                <h2>Worst Fit</h2>
-            </section>
+            <section style="max-width: 60%;">
+                <div class="mt-10" id="firstFitTheory">
+                    <h3>1. First Fit</h3>
+                    <p>  
+                      First-Fit Allocation is a memory allocation technique used in operating systems to allocate memory to a process. In First-Fit, the operating system searches through the list of free blocks of memory, starting from the beginning of the list, until it finds a block that is large enough to accommodate the memory request from the process. Once a suitable block is found, the operating system splits the block into two parts: the portion that will be allocated to the process, and the remaining free block.
+                    </p>
+                    <div>
+                      <figure>
+                        <img src="/MFT/mftImages/mftFirstFit.png" alt="first Fit" width="400px" height="400px">
+                      </figure>
+                    </div>
+                    <ul>
+                      <li><p><strong>Advantage</strong> of using First Fit Algorithm is the fastest memory allocation to the coming processes as it allocates the largest first fit algorithm to the new processes.
+                      </p></li>
+                      <li><p><strong>Disadvantage</strong> of using First Fit Algorithm is the wastage of memory which will lead to the deficiency of memory for other processes.
+                      </p></li>
+                    </ul>
+                </div>
+                <!-- <div class="mt-10" id="bestFitTheory">
+                    <h3>2. Best Fit</h3>
+                    <p>
+                        
+                    </p>
+                    <p>
+                        In this method, the operating system maintains a table that indicates which parts of memory are available and which are occupied by processes. Initially, all memory is available for user processes and is considered one large block of available memory. This available memory is known as a “Hole”. When the process arrives and needs memory, we search for a hole that is large enough to store this process. If the requirement is fulfilled then we allocate memory to process, otherwise keeping the rest available to satisfy future requests. While allocating a memory sometimes dynamic storage allocation problems occur, which concerns how to satisfy a request of size n from a list of free holes. 
+                    </p>
+                </div>
+                <div class="mt-10" id="worstFitTheory">
+                    <h3>3. Worst Fit</h3>
+                    <p>
+                        
+                    </p>
+                    <p>
+                        In this method, the operating system maintains a table that indicates which parts of memory are available and which are occupied by processes. Initially, all memory is available for user processes and is considered one large block of available memory. This available memory is known as a “Hole”. When the process arrives and needs memory, we search for a hole that is large enough to store this process. If the requirement is fulfilled then we allocate memory to process, otherwise keeping the rest available to satisfy future requests. While allocating a memory sometimes dynamic storage allocation problems occur, which concerns how to satisfy a request of size n from a list of free holes. 
+                    </p>
+                </div>
+            </section> -->
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   </body>
