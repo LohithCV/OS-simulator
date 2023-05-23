@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCFS Disk Scheduling Algorithm</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body style="background-color: darkturquoise;">
+    <div id="graph_area"></div>
+    <p>Seek Sequence: <span id="seek_sequence"></span></p>
+    <p>Seek Count: <span id="seek_count"></span></p>
+
+    <script>
+        let size = parseInt(prompt("What is the size of the disk?"));
+        let n = parseInt(prompt("How many processes?"));
+        let arr = [];
+
+        document.write("The input array is: ");
+        for (let i = 0; i < n; i++) {
+            let input = parseInt(prompt("Enter a value: "));
+            document.write(input + " ");
+            arr.push(input);
+        }
+        document.write("<br>");
+
+        let head = parseInt(prompt("What is the head position?"));
+        document.write("The head position is " + head + "<br>");
+
+        let seek_count = 0;
+        let seek_sequence = [];
+
+        for (let i = 0; i < n; i++) {
+            let distance = Math.abs(arr[i] - head);
+            seek_count += distance;
+
+            // Update the head position with a timeout
+            setTimeout(() => {
+                head = arr[i];
+                seek_sequence.push(head);
+                document.getElementById('seek_sequence').textContent = seek_sequence.join(', ');
+                document.getElementById('seek_count').textContent = seek_count;
+
+                // Prepare data for the graph
+                let x = ['Head'].concat(seek_sequence);
+                let y = [head].concat(seek_sequence);
+
+                let trace = {
+                    x: x,
+                    y: y,
+                    mode: 'lines+markers',
+                    type: 'scatter'
+                };
+
+                let data = [trace];
+
+                let layout = {
+                    title: 'FCFS Disk Scheduling',
+                    xaxis: {
+                        title: 'Cylinder Number',
+                        showgrid: true,
+                        zeroline: false
+                    },
+                    yaxis: {
+                        title: 'Head Position',
+                        showgrid: true,
+                        zeroline: false
+                    }
+                };
+
+                // Plot the graph
+                Plotly.newPlot('graph_area', data, layout);
+            }, (i + 1) * 1000); // Delay of 1 second (1000 milliseconds)
+        }
+    </script>
+</body>
+</html>

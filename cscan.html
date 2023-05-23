@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body style="background-color:cyan;">
+    <div id="output" style="white-space: pre-wrap; background-color: blueviolet;"></div>
+    <div id="graph_area"></div>
+    <script>
+        var arr = [];
+        var n = parseInt(prompt("Enter the size"));
+        var disc_size = parseInt(prompt("Enter the disc size"));
+        var heads = parseInt(prompt("Enter the head"));
+
+        var outputDiv = document.getElementById("output");
+        outputDiv.innerHTML += "The size is " + n + "<br>";
+        outputDiv.innerHTML += "The disc size is " + disc_size + "<br>";
+        outputDiv.innerHTML += "The head is " + heads + "<br>";
+        outputDiv.innerHTML += "The input array is as follows: ";
+
+        for (var i = 0; i < n; i++) {
+            var input = prompt("Enter a value: ");
+            outputDiv.innerHTML += input + " ";
+            arr.push(parseInt(input));
+        }
+
+        outputDiv.innerHTML += "<br>";
+
+        var left = [];
+        var right = [];
+
+        for (var i = 0; i < n; i++) {
+            if (arr[i] > heads)
+                right.push(arr[i]);
+            else
+                left.push(arr[i]);
+        }
+
+        left.sort(function(a, b) {
+            return a - b;
+        });
+
+        right.sort(function(a, b) {
+            return a - b;
+        });
+
+        var seek_count = 0;
+
+        var x1 = [];
+        var y1 = [];
+
+        var processItem = function(item) {
+            outputDiv.innerHTML += "Processing item " + item + "<br>";
+            seek_count += Math.abs(item - heads);
+            heads = item;
+
+            x1.push(item);
+            y1.push(seek_count);
+        };
+
+        var processRight = function(index) {
+            if (index < right.length) {
+                setTimeout(function() {
+                    processItem(right[index]);
+                    processRight(index + 1);
+                }, 1000); // Delay of 1 second (1000 milliseconds)
+            } else {
+                processItem(disc_size - 1);
+                seek_count += Math.abs(disc_size - 1 - heads);
+                seek_count += disc_size - 1;
+                heads = 0;
+                setTimeout(function() {
+                    processLeft(0);
+                }, 1000); // Delay of 1 second (1000 milliseconds)
+            }
+        };
+
+        var processLeft = function(index) {
+            if (index < left.length) {
+                setTimeout(function() {
+                    processItem(left[index]);
+                    processLeft(index + 1);
+                }, 1000); // Delay of 1 second (1000 milliseconds)
+            } else {
+                outputDiv.innerHTML += "<br> The seek count is " + seek_count;
+
+                var data = [{
+                    x: x1,
+                    y: y1,
+                    type: 'scatter'
+                }];
+
+                var layout = {
+                    xaxis: {
+                        autorange: true,
+                        showgrid: true,
+                        zeroline: false,
+                        showline: true,
+                        autotick: true,
+                        ticks: '',
+                        showticklabels: true,
+                        title: 'Cylinder Number'
+                    },
+                    yaxis: {
+                        autorange: true,
+                        showgrid: false,
+                        zeroline: false,
+                        showline: false,
+                        autotick: true,
+                        ticks: '',
+                        showticklabels: false
+                    }
+                };
+
+                Plotly.newPlot('graph_area', data, layout);
+            }
+        };
+
+        processRight(0);
+    </script>
+</body>
+</html>
