@@ -185,11 +185,15 @@ function endProcess(process_id) {
       break;
     }
   }
+  console.log(found)
   if (found == 1) {
     var i;
     for (i = 0; i < input_queue_size; i++) {
       addProcess(input_queue_process_size[i], input_queue_process_id[i], 1);
     }
+  }
+  else {
+    alert("Process-" + String(process_id) + " not found in memory");
   }
   drawInputQTable();
   drawFragmentations();
@@ -248,12 +252,10 @@ function drawProcess(process_size, currProcessId, index) {
   ctx.fillStyle = "#B0DAFF";
   ctx.fill();
 
-  ctx.font =  String((process_size * (500 / total_mem_size)-2)*0.5)+"px Arial bold";
+  ctx.font =  "14px Arial bold";
   ctx.fillStyle = "#FF55BB";
-  ctx.fillText("P-" + String(currProcessId), canvasWidth / 2, partitionStart[index] + process_size * (500 / total_mem_size) / 2);
+  ctx.fillText("P-" + String(currProcessId), canvasWidth / 3, partitionStart[index] + process_size * (500 / total_mem_size) / 2);
 }
-
-
 
 function addToQueue(process_size, process_id) {
   input_queue_size += 1;
@@ -375,7 +377,7 @@ function drawFragmentations() {
 }
 
 function drawLegend(){
-    var htmlText = '<canvas id="l" width="200" height="200"></canvas>'
+    var htmlText = '<canvas id="l" width="250" height="200"></canvas>'
     $("#legend").html(htmlText);
     helper();
 }
@@ -401,4 +403,5 @@ function helper() {
     ctx.fillStyle = "#FF55BB";
     ctx.fillText("Process Unused Memory",70,80);
   }
+  
   

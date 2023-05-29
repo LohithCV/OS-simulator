@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MFT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="/MFT/styles.css" rel="stylesheet">
+  </head>
+  <body style="background-color: #ECF8F9;">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/index.html">Home</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <a class="navbar-brand" href="/memoryManagement.html">Memory Management</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Simulate
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/MFT/mftFirstFit.html">First Fit</a></li>
+                      <li><a class="dropdown-item" href="/MFT/mftBestFit.html">Best Fit</a></li>
+                      <li><a class="dropdown-item" href="/MFT/mftWorstFit.html">Worst Fit</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </header>
+    <main class="d-flex flex-column justify-content-center align-items-center mx-auto" >
+            <section style="max-width: 60%;">
+                <h1 class="text-center">MFT Theory</h1>
+                <div class="mt-10">
+                    <h3>Memory Management</h3>
+                    <p>
+                        In a multiprogramming computer, the Operating System resides in a part of memory and the rest is used by multiple processes. The task of subdividing the memory among different processes is called Memory Management. Memory management is a method in the operating system to manage operations between main memory and disk during process execution. The main aim of memory management is to achieve efficient utilization of memory.  
+                    </p>
+                </div>
+                <div class="mt-10">
+                    <h3>Multiprogramming with Fixed Partitions</h3>
+                    <p>
+                        Memory partitions scheme with a fixed number of partitions was introduced to support multiprogramming. This scheme is based on contiguous allocation
+                        Each partition is a block of contiguous memory.
+                        Memory is partitioned into a fixed number of partition and each partition is of fixed size.
+                    </p>
+                    <p>
+                        In this method, the operating system maintains a table that indicates which parts of memory are available and which are occupied by processes. Initially, all memory is available for user processes and is considered one large block of available memory. This available memory is known as a “Hole”. When the process arrives and needs memory, we search for a hole that is large enough to store this process. If the requirement is fulfilled then we allocate memory to process, otherwise keeping the rest available to satisfy future requests. While allocating a memory sometimes dynamic storage allocation problems occur, which concerns how to satisfy a request of size n from a list of free holes. 
+                    </p>
+                </div>
+            </section>
+            
+            <section style="max-width: 60%;">
+                <div class="mt-10" id="firstFitTheory">
+                    <h3>1. First Fit</h3>
+                    <p>  
+                      First-Fit Allocation is a memory allocation technique used in operating systems to allocate memory to a process. In First-Fit, the operating system searches through the list of free blocks of memory, starting from the beginning of the list, until it finds a block that is large enough to accommodate the memory request from the process. Once a suitable block is found, the operating system splits the block into two parts: the portion that will be allocated to the process, and the remaining free block.
+                    </p>
+                    <div>
+                      <figure>
+                        <img src="/MFT/mftImages/mftFirstFit.png" alt="first Fit" width="400px" height="400px">
+                      </figure>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                    <ul>
+                      <li><p><strong>Advantage</strong> of using First Fit Algorithm is the fastest memory allocation to the coming processes as it allocates the largest first fit algorithm to the new processes.
+                      </p></li>
+                      <li><p><strong>Disadvantage</strong> of using First Fit Algorithm is the wastage of memory which will lead to the deficiency of memory for other processes.
+                      </p></li>
+                    </ul>
+                    <a href="./mftFirstFit.html"><button class="btn btn-warning">Simulate</button></a>
+                  </div>
+                </div>
+                <div class="mt-10" id="bestFitTheory">
+                    <h3>2. Best Fit</h3>
+                    <p>
+                      Best-Fit Allocation is a memory allocation technique used in operating systems to allocate memory to a process. In Best-Fit, the operating system searches through the list of free blocks of memory to find the block that is closest in size to the memory request from the process. Once a suitable block is found, the operating system splits the block into two parts: the portion that will be allocated to the process, and the remaining free block.
+                    </p>
+                    <div>
+                      <figure>
+                        <img src="/MFT/mftImages/mftBestFit.png" alt="best Fit" width="400px" height="400px">
+                      </figure>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                    <ul>
+                      <li><p><strong>Advantage</strong> of Best-Fit Allocation include improved memory utilization, as it allocates the smallest block of memory that is sufficient to accommodate the memory request from the process. Additionally, Best-Fit can also help to reduce memory fragmentation, as it tends to allocate smaller blocks of memory that are less likely to become fragmented.
+                      </p></li>
+                      <li><p><strong>Disadvantage</strong> of Best-Fit Allocation include increased computational overhead, as the search for the best-fit block of memory can be time-consuming and requires a more complex search algorithm. Additionally, Best-Fit may also result in increased fragmentation, as it may leave smaller blocks of memory scattered throughout the memory space. 
+                      </p></li>
+                    </ul>
+                    <a href="./mftBestFit.html"><button class="btn btn-warning">Simulate</button></a>
+                  </div>
+                </div>
+                <div class="mt-10" id="worstFitTheory">
+                    <h3>3. Worst Fit</h3>
+                    <p>
+                      In this allocation technique, the process traverses the whole memory and always search for the largest hole/partition, and then the process is placed in that hole/partition. It is a slow process because it has to traverse the entire memory to search the largest hole. 
+                    </p>
+                    <div>
+                      <figure>
+                        <img src="/MFT/mftImages/mftWorstFit.png" alt="Worst Fit" width="400px" height="400px">
+                      </figure>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                    <ul>
+                      <li><p><strong>Advantage</strong> of Worst-Fit Allocation is that since this process chooses the largest hole/partition, therefore there will be large internal fragmentation. Now, this internal fragmentation will be quite big so that other small processes can also be placed in that leftover partition. 
+                      </p></li>
+                      <li><p><strong>Disadvantage</strong> of Worst-Fit Allocation is that it is a slow process because it traverses all the partitions in the memory and then selects the largest partition among all the partitions, which is a time-consuming process.
+                      </p></li>
+                    </ul>
+                    <a href="./mftWorstFit.html"><button class="btn btn-warning">Simulate</button></a>
+                  </div>
+                </div>
+            </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
