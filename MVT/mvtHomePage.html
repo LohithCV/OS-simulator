@@ -45,10 +45,16 @@
                 <div class="mt-10">
                     <h3>Multiprogramming with Variable Partitions</h3>
                     <p>
-                       
-                    </p>
-                    <p>
-                         
+                      It is a part of Contiguous allocation technique. It is used to alleviate the problem faced by Fixed Partitioning. In contrast with fixed partitioning, partitions are not made before the execution or during system configure. Various features associated with variable Partitioning-
+                      <ul>
+                        <li>RAM is empty and partitions are made during the run-time according to process's need instead of partitioning during system configure.</li>
+
+                        <li>The size of partition will be equal to incoming process.</li>
+
+                        <li>The partition size varies according to the need of the process so that the internal fragmentation can be avoided to ensure efficient utilisation of RAM.</li>
+
+                        <li>Number of partitions in RAM is not fixed and depends on the number of incoming process and Main Memory's size.</li>
+                      </ul>
                     </p>
                 </div>
             </section>
@@ -57,66 +63,51 @@
                 <div class="mt-10" id="firstFitTheory">
                     <h3>1. First Fit</h3>
                     <p>  
-                      
+                      Initially when there are no processes in the Memeory, the processes are Allocated memory on First Come First Serve manner as there are partition in the memory. The Memory Required by each is Satisfied by allocating what is requested.
+                    </p>
+                    <p>
+                      But when few Processes End and there are Holes in between Processes of different size at that time new Process Will be Allocated in the First Fit manner that is In First-Fit, the operating system searches through the list of free blocks of memory, starting from the beginning of the list, until it finds a block that is large enough to accommodate the memory request from the process. Once a suitable block is found, the operating system splits the block into two parts: the portion that will be allocated to the process, and the remaining free block.
                     </p>
                     <div>
                       <figure>
-                        <img src="" alt="first Fit" width="400px" height="400px">
+                        <img src="/MVT/mvtImages/mvtFirstFit.png" alt="mvt first Fit" width="400px" height="400px">
                       </figure>
                     </div>
                     <div style="margin-bottom: 10px;">
-                    <ul>
-                      <li><p><strong>Advantage</strong> 
-
-                      </p></li>
-                      <li><p><strong>Disadvantage</strong> 
-                        
-                      </p></li>
-                    </ul>
                     <a href="./mvtFirstFit.html"><button class="btn btn-warning">Simulate</button></a>
                   </div>
                 </div>
                 <div class="mt-10" id="bestFitTheory">
                     <h3>2. Best Fit</h3>
+                    <p>  
+                      Initially when there are no processes in the Memeory, the processes are Allocated memory on First Come First Serve manner as there are partition in the memory. The Memory Required by each is Satisfied by allocating what is requested.
+                    </p>
                     <p>
-                      
+                      But when few Processes End and there are Holes in between Processes of different size at that time new Process Will be Allocated in the Best Fit manner that is In Best-Fit, the operating system searches through the list of free blocks of memory to find the block that is closest in size to the memory request from the process. Once a suitable block is found, the operating system splits the block into two parts: the portion that will be allocated to the process, and the remaining free block.
                     </p>
                     <div>
                       <figure>
-                        <img src="" alt="best Fit" width="400px" height="400px">
+                        <img src="/MVT/mvtImages/mvtBestFit.png" alt="best Fit" width="400px" height="400px">
                       </figure>
                     </div>
                     <div style="margin-bottom: 10px;">
-                    <ul>
-                      <li><p><strong>Advantage</strong> 
-
-                      </p></li>
-                      <li><p><strong>Disadvantage</strong> 
-
-                      </p></li>
-                    </ul>
                     <a href="./mftBestFit.html"><button class="btn btn-warning">Simulate</button></a>
                   </div>
                 </div>
                 <div class="mt-10" id="worstFitTheory">
                     <h3>3. Worst Fit</h3>
+                    <p>  
+                      Initially when there are no processes in the Memeory, the processes are Allocated memory on First Come First Serve manner as there are partition in the memory. The Memory Required by each is Satisfied by allocating what is requested.
+                    </p>
                     <p>
-                       
+                      But when few Processes End and there are Holes in between Processes of different size at that time new Process Will be Allocated in the Best Fit manner that is the Operating System traverses the whole memory and always search for the largest hole/partition, and then the process is placed in that hole/partition. It is a slow process because it has to traverse the entire memory to search the largest hole.
                     </p>
                     <div>
                       <figure>
-                        <img src="" alt="Worst Fit" width="400px" height="400px">
+                        <img src="/MVT/mvtImages/mvtWorstFit.png" alt="Worst Fit" width="400px" height="400px">
                       </figure>
                     </div>
                     <div style="margin-bottom: 10px;">
-                    <ul>
-                      <li><p><strong>Advantage</strong> 
-
-                      </p></li>
-                      <li><p><strong>Disadvantage</strong> 
-                        
-                      </p></li>
-                    </ul>
                     <a href="./mvtWorstFit.html"><button class="btn btn-warning">Simulate</button></a>
                   </div>
                 </div>
