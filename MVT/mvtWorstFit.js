@@ -22,9 +22,14 @@ var total_mem_size = 0;
   var input_queue_process_size = [];
   var input_queue_size = 0;
 
+  //Fragmentation
+  var externalFragments=0;
+  var processMap = new Map();
+
   $(document).ready(function () {
     $("#memorySizeBtn").click(function () {
       total_mem_size = Number($("#memorySize").val());
+      externalFragments=total_mem_size;
       processController();
     });
   });
@@ -81,6 +86,9 @@ var total_mem_size = 0;
     if(numberOfPartition == 0) {
         worst_ind = 0;
         worst_size = total_mem_size;
+        processMap.set(process_id,process_size)
+        externalFragments-=process_size
+        drawFragmentations();
         addPartition(0, process_size, process_id);
         found = 1;
     }
@@ -113,6 +121,9 @@ var total_mem_size = 0;
             }
         }
         if(found == 1) {
+            processMap.set(process_id,process_size)
+            externalFragments-=process_size;
+            drawFragmentations();
             addPartition(worst_ind, process_size, process_id);
         }
     }
@@ -225,6 +236,9 @@ var total_mem_size = 0;
         }
         found = 1;
         numberOfPartition -= 1;
+        externalFragments+=(processMap.get(process_id))
+        processMap.delete(process_id)
+        drawFragmentations();
         break;
       }
     }
@@ -356,3 +370,28 @@ var total_mem_size = 0;
     ctx.rect(xstart, ystart, canvasWidth, canvasHeight);
     ctx.stroke();
   }
+
+  
+function drawFragmentations() {
+  var htmlText =
+    `
+  <table class='table table-bordered border-primary'>
+  <h2>Fragmentation</h2>
+  `;
+  htmlText +=
+    `
+  <tr>
+      <th>External Fragmentation</th>
+  `;
+
+  htmlText+=
+    `<td>` + externalFragments + `</td>
+      `; 
+
+  htmlText +=
+    `
+  </tr>
+  </table>
+  `;
+  $("#fragmentation").html(htmlText);
+}

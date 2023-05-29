@@ -243,7 +243,7 @@ function drawProcess(process_size, currProcessId, index) {
   ctx.fillStyle = "#B0DAFF";
   ctx.fill();
 
-  ctx.font =  String((process_size * (500 / total_mem_size)-2)*0.2)+"px Arial bold";
+  ctx.font =  "14px Arial bold";
   ctx.fillStyle = "#FF55BB";
   ctx.fillText("P-" + String(currProcessId), canvasWidth / 3, partitionStart[index] + process_size * (500 / total_mem_size) / 2);
 }
