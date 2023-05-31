@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color:#ffffff;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  .system-call {
+    margin-bottom: 20px;
+    border: 1px solid #cccaca;
+    padding: 10px;
+    border-radius: 5px;
+    background-color:#f5ecec8f;
+  }
+  
+  .call-name {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .call-description {
+    margin-top: 5px;
+    color: #666;
+  }
+  
